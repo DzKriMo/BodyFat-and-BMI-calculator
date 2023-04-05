@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Body Fat Calculator</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		input[type="number"] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+		}
+
+		label {
+			display: inline-block;
+			width: 100px;
+			text-align: left;
+		}
+
+		select {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			box-sizing: border-box;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			background-color: #f8f8f8;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			width: 100%;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		.container {
+			padding: 20px;
+		}
+
+		.result {
+			margin-top: 20px;
+			font-size: 24px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Body Fat and BMI Calculator</h1>
+		<label for="gender">Gender:</label>
+		<select id="gender">
+			<option value="male">Male</option>
+			<option value="female">Female</option>
+		</select>
+
+		<label for="weight">Weight (kg):</label>
+		<input type="number" id="weight" name="weight" required>
+
+		<label for="waist">Waist (cm):</label>
+		<input type="number" id="waist" name="waist" required>
+
+		<label for="neck">Neck (cm):</label>
+		<input type="number" id="neck" name="neck" required>
+
+		<label for="height">Height (cm):</label>
+		<input type="number" id="height" name="height" required>
+
+        <label for="hip">Hip (cm) "Only for Females":</label>
+		<input type="number" id="hip" name="hip" required>
+		<button type="button" onclick="calculate()">Calculate Body Fat</button>
+
+		<div class="result" id="result"></div>
+	</div>
+
+	<script>
+		function calculate() {
+			var gender = document.getElementById("gender").value;
+			var weight = parseFloat(document.getElementById("weight").value);
+			var waist = parseFloat(document.getElementById("waist").value);
+			var neck = parseFloat(document.getElementById("neck").value);
+			var height = parseFloat(document.getElementById("height").value);
+            var hip = parseFloat(document.getElementById("hip").value);
+			if (isNaN(weight) || isNaN(waist) || isNaN(neck) || isNaN(height)) {
+				alert("Please enter valid values for all fields.");
+				return;
+			}
+
+			var fatPercentage;
+			if (gender === "male") {
+				fatPercentage = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+			}  else {
+				fatPercentage = 495 / (1.29579 - 0.35004 * Math.log10((waist + hip) - neck) + 0.22100 * Math.log10(height)) - 450;
+			}
+
+			if (fatPercentage < 0) {
+				fatPercentage = 0;
+			}
+
+			
+			var message;
+			if (fatPercentage < 14) {
+				message = "You Are A SIGMA";
+			} else if (fatPercentage < 18) {
+				message = "That's Pretty Good";
+			} else if (fatPercentage < 25) {
+				message = "Not Bad Fluffy";
+			} else {
+				message = "DAMN! You Fat As Hell !!";
+			}
+            var Bmi;
+            Bmi=(weight/((height/100)*(height/100)))
+			
+			alert("Your body fat percentage is " + fatPercentage.toFixed(2) + "%. " + message + "   Your BMI RATE is: "+Bmi.toFixed(2));
+		}
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
