@@ -92,11 +92,14 @@
 			var neck = parseFloat(document.getElementById("neck").value);
 			var height = parseFloat(document.getElementById("height").value);
             var hip = parseFloat(document.getElementById("hip").value);
-			if (isNaN(weight) || isNaN(waist) || isNaN(neck) || isNaN(height)) {
+			if (gender === "male") {if (isNaN(weight) || isNaN(waist) || isNaN(neck) || isNaN(height)) {
 				alert("Please enter valid values for all fields.");
 				return;
 			}
-
+		}else {if (isNaN(weight) || isNaN(waist) || isNaN(neck) || isNaN(height)| isNaN(hip)) {
+				alert("Please enter valid values for all fields.");
+				return;
+			}}
 			var fatPercentage;
 			if (gender === "male") {
 				fatPercentage = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
